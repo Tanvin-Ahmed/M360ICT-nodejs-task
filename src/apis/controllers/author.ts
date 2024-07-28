@@ -21,7 +21,7 @@ export const createNewAuthor = async (req: Request, res: Response) => {
     }
 
     //   save the author data to the database
-    const createdAuthor = await saveAuthor(value);
+    const createdAuthor = await saveAuthor(value as CreateAuthorRequest);
 
     return res.status(201).json(createdAuthor);
   } catch (error: any) {
@@ -57,9 +57,20 @@ export const getSingleAuthor = async (req: Request, res: Response) => {
 export const updateAuthor = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
-    const data = req.body as CreateAuthorRequest;
+    const data = req.body;
 
-    const updatedAuthor = await updateAuthorById(id, data);
+    //   validate data
+    const { error, value } = authorSchema.validate(data);
+    if (error) {
+      return res
+        .status(400)
+        .json({ error: true, details: error.details, message: error.message });
+    }
+
+    const updatedAuthor = await updateAuthorById(
+      id,
+      value as CreateAuthorRequest
+    );
 
     return res.status(200).json(updatedAuthor);
   } catch (error: any) {
