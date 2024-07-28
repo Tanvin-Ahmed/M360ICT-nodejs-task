@@ -7,7 +7,7 @@ import {
   updateAuthorById,
 } from "../services/author";
 import { authorSchema } from "../../utils/dataValidation/dataValidator";
-import { CreateAuthorRequest, SingleAuthorResponse } from "../../types";
+import { CreateAuthorRequest } from "../../types";
 
 export const createNewAuthor = async (req: Request, res: Response) => {
   try {
@@ -35,7 +35,11 @@ export const getAllAuthors = async (req: Request, res: Response) => {
   try {
     const authors = await findAllAuthors();
 
-    return res.status(200).json(authors[0]);
+    if (!authors?.length) {
+      return res.status(404).json({ error: true, message: "No authors found" });
+    }
+
+    return res.status(200).json(authors);
   } catch (error: any) {
     return res.status(404).json({ error: true, message: "No author exist." });
   }
@@ -46,9 +50,12 @@ export const getSingleAuthor = async (req: Request, res: Response) => {
     const id = req.params?.id as string;
 
     const author = await findSingleAuthor(id);
-    const authorDataArray = author[0] as SingleAuthorResponse[];
 
-    return res.status(200).json(authorDataArray[0]);
+    if (!author) {
+      return res.status(404).json({ error: true, message: "No author found" });
+    }
+
+    return res.status(200).json(author);
   } catch (error: any) {
     return res.status(404).json({ error: true, message: "Author not found" });
   }

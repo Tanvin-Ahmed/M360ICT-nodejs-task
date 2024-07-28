@@ -7,7 +7,7 @@ import {
   saveNewBook,
   updateBookById,
 } from "../services/book";
-import { CreateBookRequest, CreateBookResponse } from "../../types";
+import { CreateBookRequest } from "../../types";
 
 export const createNewBook = async (req: Request, res: Response) => {
   try {
@@ -29,7 +29,7 @@ export const getAllBooks = async (req: Request, res: Response) => {
   try {
     const allBooks = await findAllBooks();
 
-    return res.status(200).json(allBooks[0]);
+    return res.status(200).json(allBooks);
   } catch (error) {
     return res.status(404).json({ error: true, message: "No books exists." });
   }
@@ -39,9 +39,8 @@ export const getSingleBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
     const bookInfo = await findSingleBookById(id);
-    const singleBookData = bookInfo[0] as CreateBookResponse[];
 
-    return res.status(200).json(singleBookData[0]);
+    return res.status(200).json(bookInfo);
   } catch (error) {
     return res.status(404).json({ error: true, message: "No book found." });
   }
