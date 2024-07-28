@@ -5,5 +5,16 @@ export type CreateAuthorRequest = {
 };
 
 export interface SingleAuthorResponse extends CreateAuthorRequest {
-  id: number;
+  id: number | string;
+}
+
+export type CreateBookRequest = {
+  title: string;
+  description: string;
+  published_date: Date;
+  author_id: number | string;
+};
+
+export interface CreateBookResponse extends CreateBookRequest {
+  id: number | string;
 }
