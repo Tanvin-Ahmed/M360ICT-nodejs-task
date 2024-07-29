@@ -16,6 +16,10 @@ export const findAllBooks = async (limit: number, page: number) => {
     .offset(limit * page);
 };
 
+export const findAllBookOfAnAuthor = async (authorId: number) => {
+  return await db("books").where({ author_id: authorId }).select("*");
+};
+
 export const updateBookById = async (id: number, data: CreateBookRequest) => {
   return await db("books").where({ id }).update(data);
 };

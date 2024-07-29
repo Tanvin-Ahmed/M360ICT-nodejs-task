@@ -16,6 +16,10 @@ export const findSingleAuthor = async (id: number) => {
   return await db("authors").where({ id }).first();
 };
 
+export const findSpecificAuthorBooks = async (authorId: number) => {
+  return await db("books").where({ author_id: authorId }).select("*");
+};
+
 export const updateAuthorById = async (
   id: number,
   data: CreateAuthorRequest

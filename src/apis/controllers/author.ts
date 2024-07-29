@@ -3,6 +3,7 @@ import {
   deleteAuthorById,
   findAllAuthors,
   findSingleAuthor,
+  findSpecificAuthorBooks,
   saveAuthor,
   updateAuthorById,
 } from "../services/author";
@@ -82,6 +83,26 @@ export const getSingleAuthor = async (req: Request, res: Response) => {
     return res.status(200).json(author);
   } catch (error: any) {
     return res.status(404).json({ error: true, message: "Author not found" });
+  }
+};
+
+export const getSpecificAuthorBooks = async (req: Request, res: Response) => {
+  try {
+    const authorId = req.params.id as string;
+    // type check for id
+    const { error } = isNumber.validate(authorId);
+    if (error) {
+      return res.status(400).json({
+        error: true,
+        message: "Author ID must be a integer number",
+      });
+    }
+
+    const bookList = await findSpecificAuthorBooks(Number(authorId));
+
+    return res.status(200).json(bookList);
+  } catch (error: any) {
+    return res.status(404).json({ error: true, message: "No books found." });
   }
 };
 
