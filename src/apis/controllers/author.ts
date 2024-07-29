@@ -66,8 +66,8 @@ export const getSingleAuthor = async (req: Request, res: Response) => {
   try {
     const id = req.params?.id as string;
     // type check for id
-    const { error: limitError } = isNumber.validate(id);
-    if (limitError) {
+    const { error } = isNumber.validate(id);
+    if (error) {
       return res.status(400).json({
         error: true,
         message: "ID must be a integer number",
@@ -112,8 +112,8 @@ export const updateAuthor = async (req: Request, res: Response) => {
     const data = req.body;
 
     // type check for id
-    const { error: limitError } = isNumber.validate(id);
-    if (limitError) {
+    const { error: idTypeError } = isNumber.validate(id);
+    if (idTypeError) {
       return res.status(400).json({
         error: true,
         message: "ID must be a integer number",
@@ -146,8 +146,8 @@ export const deleteAuthor = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
     // type check for id
-    const { error: limitError } = isNumber.validate(id);
-    if (limitError) {
+    const { error } = isNumber.validate(id);
+    if (error) {
       return res.status(400).json({
         error: true,
         message: "ID must be a integer number",
