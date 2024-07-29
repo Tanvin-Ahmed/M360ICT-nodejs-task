@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
-import { bookSchema, isNumber } from "../../utils/dataValidation/dataValidator";
+import {
+  bookSchema,
+  isNumber,
+  isString,
+} from "../../utils/dataValidation/dataValidator";
 import {
   deleteBookById,
   findAllBookOfAnAuthor,
   findAllBooks,
   findBookDetailWithAuthor,
+  findBooksLike,
   findSingleBookById,
   saveNewBook,
   updateBookById,
@@ -114,6 +119,23 @@ export const getBookDetailWithAuthor = async (req: Request, res: Response) => {
     return res.status(200).json(booDetailsWithAuthor);
   } catch (error: any) {
     return res.status(404).json({ error: true, message: "No book found." });
+  }
+};
+
+export const searchBooks = async (req: Request, res: Response) => {
+  try {
+    const title = req.query.title;
+
+    const { error, value } = isString.validate(title);
+    if (error) {
+      return res.status(400).json({ error: true, message: error.message });
+    }
+
+    const searchResult = await findBooksLike(value);
+
+    return res.status(200).json(searchResult);
+  } catch (error: any) {
+    return res.status(404).json({ error: true, message: "No book found" });
   }
 };
 

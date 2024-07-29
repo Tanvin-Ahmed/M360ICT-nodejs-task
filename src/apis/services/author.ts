@@ -77,6 +77,10 @@ export const findAuthorsWithBooks = async () => {
   // sorting by author id in ascending order
   return result.sort((a, b) => a.id - b.id);
 };
+// search author by author name
+export const findAuthorsLike = async (name: string) => {
+  return await db("authors").where("name", "like", `%${name}%`).select("*");
+};
 
 export const updateAuthorById = async (
   id: number,

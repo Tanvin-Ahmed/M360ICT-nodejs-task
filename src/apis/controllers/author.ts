@@ -3,6 +3,7 @@ import {
   deleteAuthorById,
   findAllAuthors,
   findAuthorDetailWithBooks,
+  findAuthorsLike,
   findAuthorsWithBooks,
   findSingleAuthor,
   findSpecificAuthorBooks,
@@ -12,6 +13,7 @@ import {
 import {
   authorSchema,
   isNumber,
+  isString,
 } from "../../utils/dataValidation/dataValidator";
 import { CreateAuthorRequest } from "../../types";
 
@@ -139,6 +141,23 @@ export const getAuthorsWithBooks = async (req: Request, res: Response) => {
     return res
       .status(404)
       .json({ error: true, message: "Authors and books are not found" });
+  }
+};
+
+export const searchAuthors = async (req: Request, res: Response) => {
+  try {
+    const name = req.query.name;
+
+    const { error, value } = isString.validate(name);
+    if (error) {
+      return res.status(400).json({ error: true, message: error.message });
+    }
+
+    const searchResult = await findAuthorsLike(value);
+
+    return res.status(200).json(searchResult);
+  } catch (error: any) {
+    return res.status(404).json({ error: true, message: "No author found" });
   }
 };
 

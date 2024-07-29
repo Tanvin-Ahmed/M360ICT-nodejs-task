@@ -48,3 +48,7 @@ export const isNumber = Joi.number().integer().required().messages({
   "number.integer": "Must be an integer",
   "any.required": "Value is required",
 });
+
+export const isString = Joi.string().allow("").optional().messages({
+  "string.base": "Description should be a type of string",
+});

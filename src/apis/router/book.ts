@@ -6,11 +6,14 @@ import {
   getAllBooks,
   getBookDetailWithAuthor,
   getSingleBook,
+  searchBooks,
   updateBook,
 } from "../controllers/book";
 
 const router = Router();
-
+// filter book by title
+router.get("/search", searchBooks);
+// other routes
 router.post("/", createNewBook);
 router.get("/", getAllBooks);
 router.get("/author/:id", getAllBookOfSpecificAuthor);

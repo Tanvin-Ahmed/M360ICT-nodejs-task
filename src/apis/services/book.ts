@@ -37,6 +37,11 @@ export const findBookDetailWithAuthor = async (bookId: number) => {
     .first();
 };
 
+// search by books title
+export const findBooksLike = async (title: string) => {
+  return await db("books").where("title", "like", `%${title}%`).select("*");
+};
+
 export const updateBookById = async (id: number, data: CreateBookRequest) => {
   return await db("books").where({ id }).update(data);
 };

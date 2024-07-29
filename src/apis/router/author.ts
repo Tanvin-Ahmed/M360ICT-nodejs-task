@@ -7,11 +7,14 @@ import {
   getAuthorsWithBooks,
   getSingleAuthor,
   getSpecificAuthorBooks,
+  searchAuthors,
   updateAuthor,
 } from "../controllers/author";
 
 const router = Router();
 
+// search
+router.get("/search", searchAuthors);
 // views
 router.get("/list-with-books", getAuthorsWithBooks);
 router.get("/:id/details-with-books", getAuthorDetailWithBooks);
