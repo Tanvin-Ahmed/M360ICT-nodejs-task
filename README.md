@@ -18,9 +18,16 @@ At first clone this repository using terminal of your local machine by using thi
 `git clone https://github.com/Tanvin-Ahmed/M360ICT-nodejs-task.git`
 
 Then run
-`year`
+
+```
+year
+```
+
 or
-`npm install`
+
+```
+npm install
+```
 
 Then create an env file with the following environment variables
 
@@ -28,4 +35,84 @@ Then create an env file with the following environment variables
 DB_USER =
 DB_PASSWORD =
 DB_SCHEMA =
+```
+
+After completing above, the project setup will be completed. Congratulations🎉
+
+You don't need to setup SQL Database or Schema or Table. When you run your project those are create automatically.
+
+### API endpoints
+
+#### Book API
+
+##### Create new book
+
+```
+POST http://localhost:8080/books
+```
+
+Pass required data to create new book. For example,
+
+```
+{
+    "title": "Computer Fundamental",
+    "description": "The basic of computer science and engineering",
+    "published_date": "2023-07-25",
+    "author_id": 2
+}
+```
+
+##### Update book by id
+
+```
+PUT http://localhost:8080/books/:id // replace :id by book id
+```
+
+also need to pass valid data to update the book. For example,
+
+```
+{
+    "title": "Computer Fundamental",
+    "description": "The basic of computer science and engineering",
+    "published_date": "2023-07-25",
+    "author_id": 2
+}
+```
+
+##### Get all books with pagination
+
+You can pass any valid integer number as value of limit and page query parameters
+
+```
+GET http://localhost:8080/books?limit=5&page=0
+```
+
+##### Get book by id
+
+```
+GET http://localhost:8080/books/:id // replace :id by book id
+```
+
+##### Get all books of specific author
+
+```
+GET http://localhost:8080/books/author/:id // replace :id by author id
+```
+
+##### Get a book details with author information
+
+```
+GET http://localhost:8080/books/:id/details-with-author // replace :id by book id
+```
+
+##### Search books by title
+
+```
+GET http://localhost:8080/books/search?title=book-title // replace book-title by your search term
+```
+
+##### Delete book
+
+```
+DELETE http://localhost:8080/books/:id // replace :id by book id
 ```
