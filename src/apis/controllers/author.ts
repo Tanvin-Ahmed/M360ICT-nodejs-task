@@ -13,6 +13,7 @@ import {
 } from "../services/author";
 import {
   authorSchema,
+  authorUpdateSchema,
   isNumber,
   isString,
   loginSchema,
@@ -246,7 +247,7 @@ export const updateAuthor = async (req: Request, res: Response) => {
     }
 
     //   validate data
-    const { error, value } = authorSchema.validate(data);
+    const { error, value } = authorUpdateSchema.validate(data);
     if (error) {
       return res
         .status(400)

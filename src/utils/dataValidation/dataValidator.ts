@@ -31,6 +31,31 @@ export const authorSchema = Joi.object({
   }),
 });
 
+export const authorUpdateSchema = Joi.object({
+  name: Joi.string().max(255).required().messages({
+    "string.base": "Name should be a type of string",
+    "string.empty": "Name cannot be empty",
+    "string.max": "Name must be less than or equal to 255 characters",
+    "any.required": "Name is required",
+  }),
+  email: Joi.string().email().max(255).optional().messages({
+    "string.base": "Email should be a type of string",
+    "string.email": "Email must be a valid email address",
+    "string.max": "Email must be less than or equal to 255 characters",
+  }),
+  password: Joi.string().min(8).max(255).allow("").optional().messages({
+    "string.base": "Password should be a type of string",
+    "string.min": "Password must be at least 8 characters long",
+    "string.max": "Password must be less than or equal to 255 characters",
+  }),
+  bio: Joi.string().allow("").optional().messages({
+    "string.base": "Bio should be a type of string",
+  }),
+  birth_date: Joi.date().allow("").messages({
+    "date.base": "Birth date must be a valid date",
+  }),
+});
+
 export const loginSchema = Joi.object({
   email: Joi.string().email().max(255).required().messages({
     "string.base": "Email should be a type of string",

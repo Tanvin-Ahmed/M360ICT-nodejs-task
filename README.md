@@ -82,7 +82,9 @@ Pass required data to login author. For example,
 }
 ```
 
-##### Update author by id
+##### Update author by id (Protected route)
+
+`Protected route must use authorization header and need to pass valid JWT token`
 
 ```
 PUT http://localhost:8080/authors/:id
@@ -144,7 +146,9 @@ GET http://localhost:8080/authors/search?name=author-name
 
 replace author name by actual name
 
-##### Delete author by id
+##### Delete author by id (Protected route)
+
+`Protected route must use authorization header and need to pass valid JWT token`
 
 ```
 DELETE http://localhost:8080/authors/:id

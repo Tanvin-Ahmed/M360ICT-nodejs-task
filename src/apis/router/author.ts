@@ -11,6 +11,7 @@ import {
   searchAuthors,
   updateAuthor,
 } from "../controllers/author";
+import { userAuthorization } from "../../middlewares/authorization";
 
 const router = Router();
 
@@ -29,7 +30,9 @@ router.post("/login", login);
 router.get("/", getAllAuthors);
 router.get("/:id", getSingleAuthor);
 router.get("/:id/books", getSpecificAuthorBooks);
-router.put("/:id", updateAuthor);
-router.delete("/:id", deleteAuthor);
+
+// authorization implemented in these route
+router.put("/:id", userAuthorization, updateAuthor);
+router.delete("/:id", userAuthorization, deleteAuthor);
 
 export default router;
