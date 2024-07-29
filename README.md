@@ -15,7 +15,10 @@ This is a server for managing a bookstore. The APIs of this server allow users t
 ### How to set up the project in your local machine?
 
 At first clone this repository using terminal of your local machine by using this command
-`git clone https://github.com/Tanvin-Ahmed/M360ICT-nodejs-task.git`
+
+```
+git clone https://github.com/Tanvin-Ahmed/M360ICT-nodejs-task.git
+```
 
 Then run
 
