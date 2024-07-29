@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import {
   deleteAuthorById,
   findAllAuthors,
+  findAuthorDetailWithBooks,
+  findAuthorsWithBooks,
   findSingleAuthor,
   findSpecificAuthorBooks,
   saveAuthor,
@@ -103,6 +105,40 @@ export const getSpecificAuthorBooks = async (req: Request, res: Response) => {
     return res.status(200).json(bookList);
   } catch (error: any) {
     return res.status(404).json({ error: true, message: "No books found." });
+  }
+};
+
+export const getAuthorDetailWithBooks = async (req: Request, res: Response) => {
+  try {
+    const authorId = req.params.id as string;
+    // type check for id
+    const { error } = isNumber.validate(authorId);
+    if (error) {
+      return res.status(400).json({
+        error: true,
+        message: "Author ID must be a integer number",
+      });
+    }
+
+    const details = await findAuthorDetailWithBooks(Number(authorId));
+
+    return res.status(200).json(details);
+  } catch (error: any) {
+    return res
+      .status(404)
+      .json({ error: true, message: "Author details with books not found" });
+  }
+};
+
+export const getAuthorsWithBooks = async (req: Request, res: Response) => {
+  try {
+    const result = await findAuthorsWithBooks();
+
+    return res.status(200).json(result);
+  } catch (error: any) {
+    return res
+      .status(404)
+      .json({ error: true, message: "Authors and books are not found" });
   }
 };
 

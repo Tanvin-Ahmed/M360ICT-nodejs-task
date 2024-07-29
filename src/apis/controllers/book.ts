@@ -4,6 +4,7 @@ import {
   deleteBookById,
   findAllBookOfAnAuthor,
   findAllBooks,
+  findBookDetailWithAuthor,
   findSingleBookById,
   saveNewBook,
   updateBookById,
@@ -89,6 +90,30 @@ export const getAllBookOfSpecificAuthor = async (
     return res.status(200).json(bookList);
   } catch (error: any) {
     return res.status(404).json({ error: true, message: "No books found." });
+  }
+};
+
+export const getBookDetailWithAuthor = async (req: Request, res: Response) => {
+  try {
+    const bookId = req.params.id as string;
+    // type check for id
+    const { error } = isNumber.validate(bookId);
+    if (error) {
+      return res.status(400).json({
+        error: true,
+        message: "Book ID must be a integer number",
+      });
+    }
+
+    const booDetailsWithAuthor = await findBookDetailWithAuthor(Number(bookId));
+
+    if (!booDetailsWithAuthor) {
+      return res.status(404).json({ error: true, message: "No book found." });
+    }
+
+    return res.status(200).json(booDetailsWithAuthor);
+  } catch (error: any) {
+    return res.status(404).json({ error: true, message: "No book found." });
   }
 };
 
