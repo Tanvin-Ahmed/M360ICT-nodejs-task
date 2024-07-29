@@ -31,7 +31,7 @@ router.get("/", getAllAuthors);
 router.get("/:id", getSingleAuthor);
 router.get("/:id/books", getSpecificAuthorBooks);
 
-// authorization implemented in these route
+// authorization implemented in these route (Protected routes)
 router.put("/:id", userAuthorization, updateAuthor);
 router.delete("/:id", userAuthorization, deleteAuthor);
 

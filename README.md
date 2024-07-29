@@ -158,7 +158,9 @@ replace :id by author id
 
 #### Book APIs
 
-##### Create new book
+##### Create new book (Protected route)
+
+`Protected route must use authorization header and need to pass valid JWT token`
 
 ```
 POST http://localhost:8080/books
@@ -175,7 +177,9 @@ Pass required data to create new book. For example,
 }
 ```
 
-##### Update book by id
+##### Update book by id (Protected route)
+
+`Protected route must use authorization header and need to pass valid JWT token`
 
 ```
 PUT http://localhost:8080/books/:id
@@ -234,7 +238,9 @@ GET http://localhost:8080/books/search?title=book-title
 
 replace book-title by your search term
 
-##### Delete book
+##### Delete book (Protected route)
+
+`Protected route must use authorization header and need to pass valid JWT token`
 
 ```
 DELETE http://localhost:8080/books/:id
