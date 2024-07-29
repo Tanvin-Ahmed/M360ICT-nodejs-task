@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { bookSchema } from "../../utils/dataValidation/dataValidator";
+import { bookSchema, isNumber } from "../../utils/dataValidation/dataValidator";
 import {
   deleteBookById,
   findAllBooks,
@@ -27,7 +27,20 @@ export const createNewBook = async (req: Request, res: Response) => {
 
 export const getAllBooks = async (req: Request, res: Response) => {
   try {
-    const allBooks = await findAllBooks();
+    const limit = req.query.limit as string;
+    const page = req.query.page as string;
+
+    // type check for limit and page
+    const { error: limitError } = isNumber.validate(limit);
+    const { error: pageError } = isNumber.validate(page);
+    if (limitError || pageError) {
+      return res.status(400).json({
+        error: true,
+        message: "Limit and page number must be a integer number",
+      });
+    }
+
+    const allBooks = await findAllBooks(Number(limit), Number(page));
 
     return res.status(200).json(allBooks);
   } catch (error) {

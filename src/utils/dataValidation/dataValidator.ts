@@ -42,3 +42,9 @@ export const bookSchema = Joi.object({
       "any.invalid": "Author ID does not exist",
     }),
 });
+
+export const isNumber = Joi.number().integer().required().messages({
+  "number.base": "Must be a number",
+  "number.integer": "Must be an integer",
+  "any.required": "Value is required",
+});

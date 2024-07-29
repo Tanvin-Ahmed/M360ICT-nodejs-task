@@ -5,7 +5,12 @@ export const saveAuthor = async (data: CreateAuthorRequest) => {
   return await db("authors").insert(data);
 };
 
-export const findAllAuthors = async () => await db("authors").select("*");
+export const findAllAuthors = async (limit: number, page: number) => {
+  return await db("authors")
+    .select("*")
+    .limit(limit)
+    .offset(limit * page);
+};
 
 export const findSingleAuthor = async (id: string) => {
   return await db("authors").where({ id }).first();

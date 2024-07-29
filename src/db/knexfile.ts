@@ -5,7 +5,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
   development: {
     client: "mysql2",
     connection: {
-      host: "127.0.0.1",
+      host: constantVariables.db_host,
       user: constantVariables.db_user,
       password: constantVariables.db_password,
       database: undefined,

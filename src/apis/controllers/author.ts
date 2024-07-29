@@ -6,7 +6,10 @@ import {
   saveAuthor,
   updateAuthorById,
 } from "../services/author";
-import { authorSchema } from "../../utils/dataValidation/dataValidator";
+import {
+  authorSchema,
+  isNumber,
+} from "../../utils/dataValidation/dataValidator";
 import { CreateAuthorRequest } from "../../types";
 
 export const createNewAuthor = async (req: Request, res: Response) => {
@@ -33,7 +36,20 @@ export const createNewAuthor = async (req: Request, res: Response) => {
 
 export const getAllAuthors = async (req: Request, res: Response) => {
   try {
-    const authors = await findAllAuthors();
+    const limit = req.query.limit as string;
+    const page = req.query.page as string;
+
+    // type check for limit and page
+    const { error: limitError } = isNumber.validate(limit);
+    const { error: pageError } = isNumber.validate(page);
+    if (limitError || pageError) {
+      return res.status(400).json({
+        error: true,
+        message: "Limit and page number must be a integer number",
+      });
+    }
+
+    const authors = await findAllAuthors(Number(limit), Number(page));
 
     if (!authors?.length) {
       return res.status(404).json({ error: true, message: "No authors found" });

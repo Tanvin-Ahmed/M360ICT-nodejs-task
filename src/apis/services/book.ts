@@ -9,7 +9,12 @@ export const findSingleBookById = async (id: string | number) => {
   return await db("books").where({ id }).first();
 };
 
-export const findAllBooks = async () => await db("books").select("*");
+export const findAllBooks = async (limit: number, page: number) => {
+  return await db("books")
+    .select("*")
+    .limit(limit)
+    .offset(limit * page);
+};
 
 export const updateBookById = async (
   id: string | number,
