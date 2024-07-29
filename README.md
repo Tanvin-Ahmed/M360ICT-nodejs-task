@@ -42,11 +42,11 @@ DB_SCHEMA =
 
 After completing above, the project setup will be completed. Congratulations🎉
 
-You don't need to setup SQL Database or Schema or Table. When you run your project those are create automatically.
+You don't need to create SQL Database or Schema or Table manually. When you run your project those are create automatically.
 
-### API endpoints
+### API Endpoints
 
-#### Book API
+#### Book APIs
 
 ##### Create new book
 
@@ -68,8 +68,10 @@ Pass required data to create new book. For example,
 ##### Update book by id
 
 ```
-PUT http://localhost:8080/books/:id // replace :id by book id
+PUT http://localhost:8080/books/:id
 ```
+
+replace :id by book id
 
 also need to pass valid data to update the book. For example,
 
@@ -93,29 +95,39 @@ GET http://localhost:8080/books?limit=5&page=0
 ##### Get book by id
 
 ```
-GET http://localhost:8080/books/:id // replace :id by book id
+GET http://localhost:8080/books/:id
 ```
+
+replace :id by book id
 
 ##### Get all books of specific author
 
 ```
-GET http://localhost:8080/books/author/:id // replace :id by author id
+GET http://localhost:8080/books/author/:id
 ```
+
+replace :id by author id
 
 ##### Get a book details with author information
 
 ```
-GET http://localhost:8080/books/:id/details-with-author // replace :id by book id
+GET http://localhost:8080/books/:id/details-with-author
 ```
+
+replace :id by book id
 
 ##### Search books by title
 
 ```
-GET http://localhost:8080/books/search?title=book-title // replace book-title by your search term
+GET http://localhost:8080/books/search?title=book-title
 ```
+
+replace book-title by your search term
 
 ##### Delete book
 
 ```
-DELETE http://localhost:8080/books/:id // replace :id by book id
+DELETE http://localhost:8080/books/:id
 ```
+
+replace :id by book id
