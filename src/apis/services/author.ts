@@ -12,17 +12,17 @@ export const findAllAuthors = async (limit: number, page: number) => {
     .offset(limit * page);
 };
 
-export const findSingleAuthor = async (id: string) => {
+export const findSingleAuthor = async (id: number) => {
   return await db("authors").where({ id }).first();
 };
 
 export const updateAuthorById = async (
-  id: string | number,
+  id: number,
   data: CreateAuthorRequest
 ) => {
   return await db("authors").where({ id }).update(data);
 };
 
-export const deleteAuthorById = async (id: string | number) => {
+export const deleteAuthorById = async (id: number) => {
   return await db("authors").where({ id }).delete();
 };

@@ -64,8 +64,16 @@ export const getAllAuthors = async (req: Request, res: Response) => {
 export const getSingleAuthor = async (req: Request, res: Response) => {
   try {
     const id = req.params?.id as string;
+    // type check for id
+    const { error: limitError } = isNumber.validate(id);
+    if (limitError) {
+      return res.status(400).json({
+        error: true,
+        message: "ID must be a integer number",
+      });
+    }
 
-    const author = await findSingleAuthor(id);
+    const author = await findSingleAuthor(Number(id));
 
     if (!author) {
       return res.status(404).json({ error: true, message: "No author found" });
@@ -82,6 +90,15 @@ export const updateAuthor = async (req: Request, res: Response) => {
     const id = req.params.id as string;
     const data = req.body;
 
+    // type check for id
+    const { error: limitError } = isNumber.validate(id);
+    if (limitError) {
+      return res.status(400).json({
+        error: true,
+        message: "ID must be a integer number",
+      });
+    }
+
     //   validate data
     const { error, value } = authorSchema.validate(data);
     if (error) {
@@ -91,7 +108,7 @@ export const updateAuthor = async (req: Request, res: Response) => {
     }
 
     const updatedAuthor = await updateAuthorById(
-      id,
+      Number(id),
       value as CreateAuthorRequest
     );
 
@@ -107,8 +124,16 @@ export const updateAuthor = async (req: Request, res: Response) => {
 export const deleteAuthor = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    // type check for id
+    const { error: limitError } = isNumber.validate(id);
+    if (limitError) {
+      return res.status(400).json({
+        error: true,
+        message: "ID must be a integer number",
+      });
+    }
 
-    const deleteInfo = await deleteAuthorById(id);
+    const deleteInfo = await deleteAuthorById(Number(id));
 
     return res.status(200).json(deleteInfo);
   } catch (error: any) {

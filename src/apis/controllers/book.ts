@@ -51,7 +51,16 @@ export const getAllBooks = async (req: Request, res: Response) => {
 export const getSingleBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
-    const bookInfo = await findSingleBookById(id);
+    // type check for id
+    const { error: limitError } = isNumber.validate(id);
+    if (limitError) {
+      return res.status(400).json({
+        error: true,
+        message: "ID must be a integer number",
+      });
+    }
+
+    const bookInfo = await findSingleBookById(Number(id));
 
     return res.status(200).json(bookInfo);
   } catch (error) {
@@ -63,10 +72,21 @@ export const updateBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
     const data = req.body;
+    // type check for id
+    const { error: limitError } = isNumber.validate(id);
+    if (limitError) {
+      return res.status(400).json({
+        error: true,
+        message: "ID must be a integer number",
+      });
+    }
     //   validate data
     const value = await bookSchema.validateAsync(data);
 
-    const updateInfo = await updateBookById(id, value as CreateBookRequest);
+    const updateInfo = await updateBookById(
+      Number(id),
+      value as CreateBookRequest
+    );
 
     return res.status(200).json(updateInfo);
   } catch (error) {
@@ -79,7 +99,16 @@ export const updateBook = async (req: Request, res: Response) => {
 export const deleteBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
-    const deleteInfo = await deleteBookById(id);
+    // type check for id
+    const { error: limitError } = isNumber.validate(id);
+    if (limitError) {
+      return res.status(400).json({
+        error: true,
+        message: "ID must be a integer number",
+      });
+    }
+
+    const deleteInfo = await deleteBookById(Number(id));
 
     return res.status(200).json(deleteInfo);
   } catch (error) {

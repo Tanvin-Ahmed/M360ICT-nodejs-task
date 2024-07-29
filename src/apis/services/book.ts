@@ -5,7 +5,7 @@ export const saveNewBook = async (data: CreateBookRequest) => {
   return await db("books").insert(data);
 };
 
-export const findSingleBookById = async (id: string | number) => {
+export const findSingleBookById = async (id: number) => {
   return await db("books").where({ id }).first();
 };
 
@@ -16,13 +16,10 @@ export const findAllBooks = async (limit: number, page: number) => {
     .offset(limit * page);
 };
 
-export const updateBookById = async (
-  id: string | number,
-  data: CreateBookRequest
-) => {
+export const updateBookById = async (id: number, data: CreateBookRequest) => {
   return await db("books").where({ id }).update(data);
 };
 
-export const deleteBookById = async (id: string | number) => {
+export const deleteBookById = async (id: number) => {
   return await db("books").where({ id }).delete();
 };
