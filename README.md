@@ -34,7 +34,8 @@ npm install
 
 Then create an env file with the following environment variables
 
-```DB_HOST =
+```
+DB_HOST =
 DB_USER =
 DB_PASSWORD =
 DB_SCHEMA =
