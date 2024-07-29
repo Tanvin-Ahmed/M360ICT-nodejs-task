@@ -42,7 +42,10 @@ export const findBooksLike = async (title: string) => {
   return await db("books").where("title", "like", `%${title}%`).select("*");
 };
 
-export const updateBookById = async (id: number, data: CreateBookRequest) => {
+export const updateBookById = async (
+  id: number,
+  data: Partial<CreateBookRequest>
+) => {
   return await db("books").where({ id }).update(data);
 };
 

@@ -49,7 +49,7 @@ You don't need to create SQL Database or Schema or Table manually. When you run 
 
 #### Author APIs
 
-##### Create author
+##### Create author (Authentication API)
 
 ```
 POST http://localhost:8080/authors
@@ -59,9 +59,26 @@ Pass required data to create new author. For example,
 
 ```
 {
-    "name": "Tanvin",
-    "bio": "This is Tanvin",
-    "birth_date": "2005-07-15"
+    "name": "Touhid",
+    "email": "touhid@gmail.com",
+    "password": "12345678",
+    "bio": "This is Touhid",
+    "birth_date": "2000-07-15"
+}
+```
+
+##### Login (Authentication API)
+
+```
+POST http://localhost:8080/authors/login
+```
+
+Pass required data to login author. For example,
+
+```
+{
+    "email": "touhid@gmail.com",
+    "password": "12345678",
 }
 ```
 

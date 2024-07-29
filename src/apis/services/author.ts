@@ -9,6 +9,10 @@ export const saveAuthor = async (data: CreateAuthorRequest) => {
   return await db("authors").insert(data);
 };
 
+export const findAuthorByEmail = async (email: string) => {
+  return await db("authors").where({ email }).first();
+};
+
 export const findAllAuthors = async (limit: number, page: number) => {
   return await db("authors")
     .select("*")
@@ -17,7 +21,10 @@ export const findAllAuthors = async (limit: number, page: number) => {
 };
 
 export const findSingleAuthor = async (id: number) => {
-  return await db("authors").where({ id }).first();
+  return await db("authors")
+    .where({ id })
+    .first()
+    .select("id", "name", "email", "bio", "birth_date");
 };
 
 export const findSpecificAuthorBooks = async (authorId: number) => {
@@ -25,7 +32,10 @@ export const findSpecificAuthorBooks = async (authorId: number) => {
 };
 
 export const findAuthorDetailWithBooks = async (authorId: number) => {
-  const author = await db("authors").where({ id: authorId }).first();
+  const author = await db("authors")
+    .where({ id: authorId })
+    .select("id", "name", "email", "bio", "birth_date")
+    .first();
   if (!author) {
     throw new Error("Author not found");
   }
@@ -41,6 +51,7 @@ export const findAuthorsWithBooks = async () => {
       "authors.id as author_id",
       "authors.name as author_name",
       "authors.bio",
+      "authors.email",
       "authors.birth_date",
       "books.id as book_id",
       "books.title as book_title",
@@ -75,16 +86,18 @@ export const findAuthorsWithBooks = async () => {
   );
 
   // sorting by author id in ascending order
-  return result.sort((a, b) => a.id - b.id);
+  return result.sort((a, b) => a.id! - b.id!);
 };
 // search author by author name
 export const findAuthorsLike = async (name: string) => {
-  return await db("authors").where("name", "like", `%${name}%`).select("*");
+  return await db("authors")
+    .where("name", "like", `%${name}%`)
+    .select("id", "name", "email", "bio", "birth_date");
 };
 
 export const updateAuthorById = async (
   id: number,
-  data: CreateAuthorRequest
+  data: Partial<CreateAuthorRequest>
 ) => {
   return await db("authors").where({ id }).update(data);
 };

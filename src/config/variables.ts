@@ -3,4 +3,5 @@ export const constantVariables = {
   db_user: process.env.DB_USER,
   db_password: process.env.DB_PASSWORD,
   db_schema: process.env.DB_SCHEMA,
+  jwt_secret: process.env.JWT_SECRET,
 };

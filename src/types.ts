@@ -2,6 +2,9 @@ export type CreateAuthorRequest = {
   name: string;
   bio: string;
   birth_date: Date;
+  email: string;
+  password?: string;
+  token?: string;
 };
 
 export interface SingleAuthorResponse extends CreateAuthorRequest {
@@ -19,7 +22,7 @@ export interface CreateBookResponse extends CreateBookRequest {
   id: number;
 }
 
-export interface AuthorWithBooks extends SingleAuthorResponse {
+export interface AuthorWithBooks extends Partial<SingleAuthorResponse> {
   books: Partial<CreateBookResponse>[];
 }
 
@@ -33,3 +36,8 @@ export interface AuthorsWithBooksResponse {
   book_description: string;
   published_date: Date;
 }
+
+export type AuthToken = {
+  id: number;
+  email: string;
+};

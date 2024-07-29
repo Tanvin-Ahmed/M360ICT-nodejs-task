@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   deleteAuthorById,
   findAllAuthors,
+  findAuthorByEmail,
   findAuthorDetailWithBooks,
   findAuthorsLike,
   findAuthorsWithBooks,
@@ -14,12 +15,19 @@ import {
   authorSchema,
   isNumber,
   isString,
+  loginSchema,
 } from "../../utils/dataValidation/dataValidator";
 import { CreateAuthorRequest } from "../../types";
+import {
+  comparePassword,
+  generateHash,
+  generateToken,
+} from "../../utils/helper/auth";
 
 export const createNewAuthor = async (req: Request, res: Response) => {
   try {
     const authorData = req.body;
+
     //   validate data
     const { error, value } = authorSchema.validate(authorData);
     if (error) {
@@ -28,14 +36,76 @@ export const createNewAuthor = async (req: Request, res: Response) => {
         .json({ error: true, details: error.details, message: error.message });
     }
 
-    //   save the author data to the database
-    const createdAuthor = await saveAuthor(value as CreateAuthorRequest);
+    // check if email already exists
+    const existingAuthor = await findAuthorByEmail(value.email);
+    if (existingAuthor) {
+      return res
+        .status(400)
+        .json({ error: true, message: "Email already exists" });
+    }
 
-    return res.status(201).json(createdAuthor);
+    // generate hash password
+    const password = await generateHash(value.password);
+
+    //   save the author data to the database
+    const createdAuthor = await saveAuthor({
+      ...value,
+      password,
+    } as CreateAuthorRequest);
+    const authorId = createdAuthor[0];
+
+    // generate token
+    const token = generateToken({ id: authorId, email: value.email });
+
+    // save token to db
+    await updateAuthorById(authorId, { token });
+
+    return res.status(201).json({ token });
   } catch (error: any) {
     return res
       .status(500)
-      .json({ error: true, message: "Author not created. Please try again." });
+      .json({ error: true, message: "Registration failed. Please try again." });
+  }
+};
+
+export const login = async (req: Request, res: Response) => {
+  try {
+    const data = req.body;
+    // validate login credentials
+    const { error, value } = loginSchema.validate(data);
+    if (error) {
+      return res.status(400).json({ error: true, message: error.message });
+    }
+
+    const author = await findAuthorByEmail(value.email);
+    if (!author) {
+      return res.status(404).json({
+        error: true,
+        message: "Email not found. Please register first.",
+      });
+    }
+
+    const isPasswordCorrect = await comparePassword(
+      value.password,
+      author.password
+    );
+    if (!isPasswordCorrect) {
+      return res.status(400).json({
+        error: true,
+        message: "Wrong credentials. Please try again with valid credentials.",
+      });
+    }
+
+    // generate new token
+    const token = generateToken({ id: author.id, email: author.email });
+    // save new token to db
+    await updateAuthorById(author.id, { token });
+
+    return res.status(200).json({ token });
+  } catch (error: any) {
+    return res
+      .status(500)
+      .json({ error: true, message: "Login failed. Please try again." });
   }
 };
 

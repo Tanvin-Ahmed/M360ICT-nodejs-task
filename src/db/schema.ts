@@ -15,7 +15,10 @@ const createDatabaseAndTables = async () => {
     if (!(await db.schema.hasTable("authors"))) {
       await db.schema.createTable("authors", (table) => {
         table.increments("id").primary();
-        table.string("name", 255).notNullable();
+        table.string("name", 255).notNullable().unique();
+        table.string("email", 255).notNullable().unique();
+        table.string("password", 255).notNullable();
+        table.text("token");
         table.text("bio");
         table.date("birth_date").notNullable();
       });
