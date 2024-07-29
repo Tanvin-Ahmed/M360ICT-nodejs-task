@@ -8,9 +8,5 @@ const configOptions = knexConfig[environment];
 export const db = Knex(configOptions);
 
 (async () => {
-  try {
-    await createDatabaseAndTables();
-  } catch (error: any) {
-    console.log(error);
-  }
+  await createDatabaseAndTables();
 })();

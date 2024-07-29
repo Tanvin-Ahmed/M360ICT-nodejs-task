@@ -37,8 +37,11 @@ const createDatabaseAndTables = async () => {
       });
       console.log("Book table created successfully");
     }
+
+    console.log("DB connected");
   } catch (error) {
     console.error("Error creating database and tables:", error);
+    process.exit(1);
   }
 };
 
