@@ -46,6 +46,94 @@ You don't need to create SQL Database or Schema or Table manually. When you run 
 
 ### API Endpoints
 
+#### Author APIs
+
+##### Create author
+
+```
+POST http://localhost:8080/authors
+```
+
+Pass required data to create new author. For example,
+
+```
+{
+    "name": "Tanvin",
+    "bio": "This is Tanvin",
+    "birth_date": "2005-07-15"
+}
+```
+
+##### Update author by id
+
+```
+PUT http://localhost:8080/authors/:id
+```
+
+replace :id by author id
+
+also need to pass valid data to update the author. For example,
+
+```
+{
+    "name": "Ahmed",
+    "bio": "This is Ahmed",
+    "birth_date": "2001-07-15"
+}
+```
+
+##### Get all authors
+
+```
+GET http://localhost:8080/authors
+```
+
+##### Get single author
+
+```
+GET http://localhost:8080/authors/:id
+```
+
+replace :id by author id
+
+##### Get all books of a specific author
+
+```
+GET http://localhost:8080/authors/:id/books
+```
+
+replace :id by author id
+
+##### Get author details with list his/her of books
+
+```
+GET http://localhost:8080/authors/:id/details-with-books
+```
+
+replace :id by author id
+
+##### Get author list with their book list
+
+```
+GET http://localhost:8080/authors/list-with-books
+```
+
+##### Search author by author name
+
+```
+GET http://localhost:8080/authors/search?name=author-name
+```
+
+replace author name by actual name
+
+##### Delete author by id
+
+```
+DELETE http://localhost:8080/authors/:id
+```
+
+replace :id by author id
+
 #### Book APIs
 
 ##### Create new book
