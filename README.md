@@ -43,7 +43,45 @@ DB_SCHEMA =
 
 After completing above, the project setup will be completed. Congratulations🎉
 
-You don't need to create SQL Database or Schema or Table manually. When you run your project those are create automatically.
+After that you can just run the following command to start the server on your machine
+
+```
+yarn run dev
+```
+
+or
+
+```
+npm run dev
+```
+
+If you want to build the project then you can run the following command
+
+```
+yarn run build
+```
+
+or
+
+```
+npm run build
+```
+
+Then you can run the following command to start the server from dist (output) folder.
+
+```
+yarn start
+```
+
+or
+
+```
+npm start
+```
+
+You can upload dist folder to any hosting server to make it live.
+
+`You don't need to create SQL Database or Schema or Table manually. When you run your project those are create automatically.`
 
 ### API Endpoints
 
