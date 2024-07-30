@@ -31,7 +31,8 @@ export const findBookDetailWithAuthor = async (bookId: number) => {
       "authors.id as author_id",
       "authors.name as author_name",
       "authors.bio",
-      "authors.birth_date"
+      "authors.birth_date",
+      "authors.email"
     )
     .where("books.id", bookId)
     .first();

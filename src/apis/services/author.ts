@@ -15,7 +15,7 @@ export const findAuthorByEmail = async (email: string) => {
 
 export const findAllAuthors = async (limit: number, page: number) => {
   return await db("authors")
-    .select("*")
+    .select("id", "name", "email", "bio", "birth_date")
     .limit(limit)
     .offset(limit * page);
 };
@@ -68,6 +68,7 @@ export const findAuthorsWithBooks = async () => {
           name: row.author_name,
           bio: row.bio,
           birth_date: row.birth_date,
+          email: row.email,
           books: [],
         };
         acc.push(author);

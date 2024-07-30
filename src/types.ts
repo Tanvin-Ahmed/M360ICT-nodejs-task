@@ -29,6 +29,7 @@ export interface AuthorWithBooks extends Partial<SingleAuthorResponse> {
 export interface AuthorsWithBooksResponse {
   author_id: number;
   author_name: string;
+  email: string;
   bio: string;
   birth_date: Date;
   book_id: number;
