@@ -43,7 +43,7 @@ DB_SCHEMA =
 
 After completing above, the project setup will be completed. Congratulations🎉
 
-After that you can just run the following command to start the server on your machine
+After that you can just run the following command to start the development server on your machine
 
 ```
 yarn run dev
