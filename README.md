@@ -7,8 +7,11 @@ This is a server for managing a bookstore. The APIs of this server allow users t
 - TypeScript
 - Node.js
 - Express.js
-- MySQL
+- MySQL (Database)
 - Knex (query builder)
+- Joi (data validator)
+- Jsonwebtoken
+- Bcrypt
 
 ## Documentation
 
